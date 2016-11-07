@@ -1,0 +1,24 @@
+{
+  "name": "object-fx",
+  "version": "0.1.0",
+  "description": "Flatten and expand for javascript objects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodexo/object-fx.git"
+  },
+  "keywords": [
+    "object",
+    "flatten",
+    "expand"
+  ],
+  "author": "Michael Kortstiege",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nodexo/object-fx/issues"
+  },
+  "homepage": "https://github.com/nodexo/object-fx#readme"
+}
