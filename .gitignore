@@ -1,0 +1,7 @@
+.DS*
+._*
+_*
+*.log
+.nyc_output
+Thumbs.db
+node_modules

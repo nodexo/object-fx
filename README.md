@@ -1,2 +1,5 @@
-# object-fx
-Flatten and expand for javascript objects.
+
+object-fx
+=========
+
+Flatten and expand for objects.

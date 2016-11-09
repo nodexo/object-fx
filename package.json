@@ -1,10 +1,10 @@
 {
   "name": "object-fx",
   "version": "0.1.0",
-  "description": "Flatten and expand for javascript objects.",
+  "description": "Flatten and expand for objects.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,12 @@
   "bugs": {
     "url": "https://github.com/nodexo/object-fx/issues"
   },
-  "homepage": "https://github.com/nodexo/object-fx#readme"
+  "homepage": "https://github.com/nodexo/object-fx#readme",
+  "devDependencies": {
+    "standard": "^8.5.0",
+    "tap": "^8.0.0"
+  },
+  "dependencies": {
+    "depicts-whole-number": "^1.0.3"
+  }
 }
