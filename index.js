@@ -8,11 +8,11 @@ const depictsWholeNumber = require('depicts-whole-number').onlySafeNumbers
 class ObjectFx {
 
   /**
-   * Expands (unflattens) a flat object
-   * @param {Object} objFlat - flat object
+   * Expands (unflattens) a flattened object
+   * @param {Object} objFlat - flattened object
    * @param {Object} opt - options
    */
-  expand (objFlat, opt) {
+  static expand (objFlat, opt) {
     if (Object.prototype.toString.call(objFlat) !== '[object Object]') {
       return null
     }
