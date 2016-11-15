@@ -55,7 +55,7 @@ class ObjectFx {
             }
           }
         }
-        if (explicitArrays) {
+        if (explicitArrays && currChunk.startsWith('[') && currChunk.endsWith(']') && depictsWholeNumber(currChunk.replace(/[\[\]]/g, ''))) {
           currChunk.replace(/[\[\]]/g, '')
         }
         obj = obj[currChunk]
