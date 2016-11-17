@@ -1,7 +1,8 @@
 
 const depictsWholeNumber = require('depicts-whole-number').onlySafeNumbers
 const c = {
-  DOT: '.',
+  ESCAPE_CHAR: '\\',
+  KEY_SEPARATOR: '.',
   EMPTY_STRING: '',
   REGEX: {
     SQUARE_BRACKETS: /[\[\]]/g,
@@ -21,7 +22,7 @@ class ObjectFx {
    * @param {String} s
    * @return {Boolean}
    */
-  static _isValidArrayIndex (s) {
+  static _isValidArrayIndex(s) {
     return depictsWholeNumber(s)
   }
 
@@ -30,7 +31,7 @@ class ObjectFx {
    * @param {String} s
    * @return {Boolean}
    */
-  static _containsValidArrayIndex (s) {
+  static _containsValidArrayIndex(s) {
     const result = s.match(c.REGEX.EXPLICIT_ARRAY)
     if (!result) {
       return false
@@ -42,14 +43,15 @@ class ObjectFx {
    * Expands (unflattens) a flattened object
    * @param {Object} objFlat - flattened object
    * @param {Object} opt - options
+   * @return {Object}
    */
   static expand(objFlat, opt) {
     if (Object.prototype.toString.call(objFlat) !== '[object Object]') {
       return null
     }
     const optIsObject = Object.prototype.toString.call(opt) === '[object Object]'
-    const SEP = (optIsObject ? opt['KeySeparator'] || c.DOT : c.DOT)
-    const autocreateArrays = (optIsObject ? (opt['AutocreateArrays'] === false ? false : true ) : true)
+    const SEP = (optIsObject ? opt['KeySeparator'] || c.KEY_SEPARATOR : c.KEY_SEPARATOR)
+    const autocreateArrays = (optIsObject ? (opt['AutocreateArrays'] === false ? false : true) : true)
     const explicitArrays = (optIsObject ? opt['ExplicitArrays'] : false)
     const prefix = 'root' + SEP
     const regexConsecutiveSeparators = new RegExp('\\' + SEP + '{2,}', 'g')
@@ -61,9 +63,9 @@ class ObjectFx {
       let currKey = prefix + origKey
       if (explicitArrays) {
         currKey = currKey
-                    .replace(c.REGEX.EXPLICIT_ARRAY_GM, SEP + '[$1]' + SEP)
-                    .replace(regexConsecutiveSeparators, SEP)
-                    .replace(regexSurroundingSeparators, c.EMPTY_STRING)
+          .replace(c.REGEX.EXPLICIT_ARRAY_GM, SEP + '[$1]' + SEP)
+          .replace(regexConsecutiveSeparators, SEP)
+          .replace(regexSurroundingSeparators, c.EMPTY_STRING)
       }
       const chunks = currKey.split(SEP)
       let obj = objExp
@@ -78,7 +80,7 @@ class ObjectFx {
             obj[currChunk] = objFlat[origKey]
           } else {
             if ((autocreateArrays && this._isValidArrayIndex(nextChunk)) ||
-                (explicitArrays && this._containsValidArrayIndex(nextChunk))) {
+              (explicitArrays && this._containsValidArrayIndex(nextChunk))) {
               obj[currChunk] = []
             } else {
               obj[currChunk] = {}
@@ -93,6 +95,71 @@ class ObjectFx {
     }
     return objExp.root
   }
+
+  /**
+   * Flattens an object
+   * @param {Object} objExp
+   * @param {Object} opt - options
+   * @return {Object}
+   */
+  static flatten(objExp, opt) {
+    if (Object.prototype.toString.call(objExp) !== '[object Object]') {
+      return null
+    }
+    const optIsObject = Object.prototype.toString.call(opt) === '[object Object]'
+    const SEP = (optIsObject ? opt['KeySeparator'] || c.KEY_SEPARATOR : c.KEY_SEPARATOR)
+    const circularityCheck = (optIsObject ? opt['CircularityCheck'] : false)
+    const maxDepth = parseInt((optIsObject ? opt['MaxDepth'] : 0))
+    const explicitArrays = (optIsObject ? opt['ExplicitArrays'] : false)
+
+    if (circularityCheck) {
+      try {
+        JSON.stringify(objExp)
+      } catch (err) {
+        if (err.message.match(/circular structure/ig)) {
+          throw TypeError('Unable to flatten circular structure')
+        }
+      }
+    }
+
+    let result = {}
+    const recurse = (cur, prop, lev) => {
+      if (maxDepth > 0 && lev >= maxDepth) {
+        result[prop] = cur
+        return
+      }
+      lev++
+      if (typeof cur !== 'object') { // Object(cur) !== cur
+        result[prop] = cur
+      } else if (Array.isArray(cur)) { // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
+        for (var i = 0, l = cur.length; i < l; i++) {
+          if (explicitArrays) {
+            recurse(cur[i], prop + '[' + i + ']', lev)
+          } else {
+            let prefix = prop
+            if (prefix) {
+              prefix += SEP
+            }
+            recurse(cur[i], prefix + i, lev)
+          }
+        }
+        if (l === 0) {
+          result[prop] = []
+        }
+      } else {
+        if (Object.prototype.toString.call(cur) === '[object Object]') { // cur && cur.toString() === '[object Object]'
+          for (var p in cur) {
+            recurse(cur[p], prop ? prop + SEP + p : p, lev)
+          }
+        } else {
+          result[prop] = cur
+        }
+      }
+    }
+    recurse(objExp, c.EMPTY_STRING, 0)
+    return result
+  }
+
 }
 
 module.exports = ObjectFx
