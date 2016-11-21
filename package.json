@@ -13,7 +13,8 @@
   "keywords": [
     "object",
     "flatten",
-    "expand"
+    "expand",
+    "unflatten"
   ],
   "author": "Michael Kortstiege",
   "license": "ISC",
@@ -21,11 +22,11 @@
     "url": "https://github.com/nodexo/object-fx/issues"
   },
   "homepage": "https://github.com/nodexo/object-fx#readme",
+  "dependencies": {
+    "depicts-whole-number": "^1.0.7"
+  },
   "devDependencies": {
     "standard": "^8.5.0",
-    "tap": "^8.0.0"
-  },
-  "dependencies": {
-    "depicts-whole-number": "^1.0.3"
+    "tap": "^8.0.1"
   }
 }
