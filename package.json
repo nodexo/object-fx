@@ -1,7 +1,7 @@
 {
   "name": "object-fx",
   "version": "0.1.0",
-  "description": "Flatten and expand for objects.",
+  "description": "Flatten and expand objects.",
   "main": "index.js",
   "scripts": {
     "test": "standard"

@@ -2,4 +2,4 @@
 object-fx
 =========
 
-Flatten and expand for objects.
+Flatten and expand objects.
