@@ -22,7 +22,7 @@ class ObjectFx {
    * @param {String} s
    * @return {Boolean}
    */
-  static _isValidArrayIndex(s) {
+  static _isValidArrayIndex (s) {
     return depictsWholeNumber(s)
   }
 
@@ -31,7 +31,7 @@ class ObjectFx {
    * @param {String} s
    * @return {Boolean}
    */
-  static _containsValidArrayIndex(s) {
+  static _containsValidArrayIndex (s) {
     const result = s.match(c.REGEX.EXPLICIT_ARRAY)
     if (!result) {
       return false
@@ -45,13 +45,13 @@ class ObjectFx {
    * @param {Object} opt - options
    * @return {Object}
    */
-  static expand(objFlat, opt) {
+  static expand (objFlat, opt) {
     if (Object.prototype.toString.call(objFlat) !== '[object Object]') {
       return null
     }
     const optIsObject = Object.prototype.toString.call(opt) === '[object Object]'
     const SEP = (optIsObject ? opt['KeySeparator'] || c.KEY_SEPARATOR : c.KEY_SEPARATOR)
-    const autocreateArrays = (optIsObject ? (opt['AutocreateArrays'] === false ? false : true) : true)
+    const autocreateArrays = (optIsObject ? (opt['AutocreateArrays'] === false ? opt['AutocreateArrays'] : true) : true)
     const explicitArrays = (optIsObject ? opt['ExplicitArrays'] : false)
     const prefix = 'root' + SEP
     const regexConsecutiveSeparators = new RegExp('\\' + SEP + '{2,}', 'g')
@@ -102,7 +102,7 @@ class ObjectFx {
    * @param {Object} opt - options
    * @return {Object}
    */
-  static flatten(objExp, opt) {
+  static flatten (objExp, opt) {
     if (Object.prototype.toString.call(objExp) !== '[object Object]') {
       return null
     }
