@@ -4,4 +4,5 @@ _*
 *.log
 .nyc_output
 Thumbs.db
+coverage
 node_modules
