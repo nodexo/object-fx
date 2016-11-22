@@ -4,7 +4,8 @@
   "description": "Flatten and expand objects.",
   "main": "index.js",
   "scripts": {
-    "test": "standard"
+    "test": "standard & tap test/*.js --coverage --reporter spec",
+    "posttest": "tap --coverage-report=lcov"
   },
   "repository": {
     "type": "git",
