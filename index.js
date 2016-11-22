@@ -45,6 +45,9 @@ class ObjectFx {
    * @param {Object} opt - options
    * @return {Object}
    */
+  static unflatten (objFlat, opt) {
+    return this.expand(objFlat, opt)
+  }
   static expand (objFlat, opt) {
     if (Object.prototype.toString.call(objFlat) !== '[object Object]') {
       return null
