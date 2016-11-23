@@ -166,7 +166,8 @@ console.log(expandedObject)
 
 ```
 
-### unflatten(obj, opt)
+unflatten(obj, opt)
+-------------------
 
 Expands an object (alternate method name).  
 Uses [expand](#expandobj-opt) under the hood.
