@@ -10,6 +10,13 @@ const c = {
     EXPLICIT_ARRAY_GM: /\[(0|[1-9][0-9]*)\]/g
   }
 }
+const defaultOptions = {
+  KeySeparator: c.KEY_SEPARATOR,
+  AutocreateArrays: true,
+  ExplicitArrays: false,
+  CircularityCheck: false,
+  MaxDepth: 0
+}
 
 /**
  * ObjectFx static class.
@@ -42,55 +49,52 @@ class ObjectFx {
   /**
    * Expands (unflattens) a flattened object
    * @param {Object} objFlat - flattened object
-   * @param {Object} opt - options
+   * @param {Object} userOptions - options
    * @return {Object}
    */
-  static unflatten (objFlat, opt) {
-    return this.expand(objFlat, opt)
+  static unflatten (objFlat, userOptions) {
+    return this.expand(objFlat, userOptions)
   }
-  static expand (objFlat, opt) {
+  static expand (objFlat, userOptions) {
     if (Object.prototype.toString.call(objFlat) !== '[object Object]') {
       return null
     }
-    const optIsObject = Object.prototype.toString.call(opt) === '[object Object]'
-    const SEP = (optIsObject ? opt['KeySeparator'] || c.KEY_SEPARATOR : c.KEY_SEPARATOR)
-    const autocreateArrays = (optIsObject ? (opt['AutocreateArrays'] === false ? opt['AutocreateArrays'] : true) : true)
-    const explicitArrays = (optIsObject ? opt['ExplicitArrays'] : false)
-    const prefix = 'root' + SEP
-    const regexConsecutiveSeparators = new RegExp('\\' + SEP + '{2,}', 'g')
-    const regexSurroundingSeparators = new RegExp('^\\' + SEP + '+|\\' + SEP + '+$', 'g')
+    const options = Object.prototype.toString.call(userOptions) === '[object Object]' ? Object.assign({}, defaultOptions, userOptions) : defaultOptions
+    const prefix = 'root' + options.KeySeparator
+    const regexConsecutiveSeparators = new RegExp('\\' + options.KeySeparator + '{2,}', 'g')
+    const regexSurroundingSeparators = new RegExp('^\\' + options.KeySeparator + '+|\\' + options.KeySeparator + '+$', 'g')
     const objExp = {}
     let keys = Object.keys(objFlat)
     for (let i = 0, kln = keys.length; i < kln; i++) {
       const origKey = keys[i]
       let currKey = prefix + origKey
-      if (explicitArrays) {
+      if (options.ExplicitArrays) {
         currKey = currKey
-          .replace(c.REGEX.EXPLICIT_ARRAY_GM, SEP + '[$1]' + SEP)
-          .replace(regexConsecutiveSeparators, SEP)
+          .replace(c.REGEX.EXPLICIT_ARRAY_GM, options.KeySeparator + '[$1]' + options.KeySeparator)
+          .replace(regexConsecutiveSeparators, options.KeySeparator)
           .replace(regexSurroundingSeparators, c.EMPTY_STRING)
       }
-      const chunks = currKey.split(SEP)
+      const chunks = currKey.split(options.KeySeparator)
       let obj = objExp
       for (let j = 0, cln = chunks.length; j < cln; j++) {
         let currChunk = chunks[j]
         let nextChunk = chunks[j + 1]
-        if (explicitArrays) {
+        if (options.ExplicitArrays) {
           currChunk = currChunk.replace(c.REGEX.SQUARE_BRACKETS, c.EMPTY_STRING)
         }
         if (!obj[currChunk]) {
           if (j > cln - 2) {
             obj[currChunk] = objFlat[origKey]
           } else {
-            if ((autocreateArrays && this._isValidArrayIndex(nextChunk)) ||
-              (explicitArrays && this._containsValidArrayIndex(nextChunk))) {
+            if ((options.AutocreateArrays && this._isValidArrayIndex(nextChunk)) ||
+              (options.ExplicitArrays && this._containsValidArrayIndex(nextChunk))) {
               obj[currChunk] = []
             } else {
               obj[currChunk] = {}
             }
           }
         }
-        if (explicitArrays && this._containsValidArrayIndex(currChunk)) {
+        if (options.ExplicitArrays && this._containsValidArrayIndex(currChunk)) {
           currChunk.replace(c.REGEX.SQUARE_BRACKETS, c.EMPTY_STRING)
         }
         obj = obj[currChunk]
@@ -102,20 +106,15 @@ class ObjectFx {
   /**
    * Flattens an object
    * @param {Object} objExp
-   * @param {Object} opt - options
+   * @param {Object} userOptions - options
    * @return {Object}
    */
-  static flatten (objExp, opt) {
+  static flatten (objExp, userOptions) {
     if (Object.prototype.toString.call(objExp) !== '[object Object]') {
       return null
     }
-    const optIsObject = Object.prototype.toString.call(opt) === '[object Object]'
-    const SEP = (optIsObject ? opt['KeySeparator'] || c.KEY_SEPARATOR : c.KEY_SEPARATOR)
-    const circularityCheck = (optIsObject ? opt['CircularityCheck'] : false)
-    const maxDepth = parseInt((optIsObject ? opt['MaxDepth'] : 0))
-    const explicitArrays = (optIsObject ? opt['ExplicitArrays'] : false)
-
-    if (circularityCheck) {
+    const options = Object.prototype.toString.call(userOptions) === '[object Object]' ? Object.assign({}, defaultOptions, userOptions) : defaultOptions
+    if (options.CircularityCheck) {
       try {
         JSON.stringify(objExp)
       } catch (err) {
@@ -127,7 +126,7 @@ class ObjectFx {
 
     let result = {}
     const recurse = (cur, prop, lev) => {
-      if (maxDepth > 0 && lev >= maxDepth) {
+      if (options.MaxDepth > 0 && lev >= options.MaxDepth) {
         result[prop] = cur
         return
       }
@@ -136,12 +135,12 @@ class ObjectFx {
         result[prop] = cur
       } else if (Array.isArray(cur)) { // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
         for (var i = 0, l = cur.length; i < l; i++) {
-          if (explicitArrays) {
+          if (options.ExplicitArrays) {
             recurse(cur[i], prop + '[' + i + ']', lev)
           } else {
             let prefix = prop
             if (prefix) {
-              prefix += SEP
+              prefix += options.KeySeparator
             }
             recurse(cur[i], prefix + i, lev)
           }
@@ -152,7 +151,7 @@ class ObjectFx {
       } else {
         if (Object.prototype.toString.call(cur) === '[object Object]') { // cur && cur.toString() === '[object Object]'
           for (var p in cur) {
-            recurse(cur[p], prop ? prop + SEP + p : p, lev)
+            recurse(cur[p], prop ? prop + options.KeySeparator + p : p, lev)
           }
         } else {
           result[prop] = cur
