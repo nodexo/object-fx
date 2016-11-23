@@ -119,7 +119,8 @@ class ObjectFx {
         JSON.stringify(objExp)
       } catch (err) {
         if (err.message.match(/circular structure/ig)) {
-          throw TypeError('Unable to flatten circular structure')
+          // throw TypeError('Unable to flatten circular structure')
+          return null
         }
       }
     }
