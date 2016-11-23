@@ -11,7 +11,7 @@ const c = {
   }
 }
 const defaultOptions = {
-  KeySeparator: c.KEY_SEPARATOR,
+  CustomDelimiter: c.KEY_SEPARATOR,
   AutocreateArrays: true,
   ExplicitArrays: false,
   CircularityCheck: false,
@@ -60,9 +60,9 @@ class ObjectFx {
       return null
     }
     const options = Object.prototype.toString.call(userOptions) === '[object Object]' ? Object.assign({}, defaultOptions, userOptions) : defaultOptions
-    const prefix = 'root' + options.KeySeparator
-    const regexConsecutiveSeparators = new RegExp('\\' + options.KeySeparator + '{2,}', 'g')
-    const regexSurroundingSeparators = new RegExp('^\\' + options.KeySeparator + '+|\\' + options.KeySeparator + '+$', 'g')
+    const prefix = 'root' + options.CustomDelimiter
+    const regexConsecutiveSeparators = new RegExp('\\' + options.CustomDelimiter + '{2,}', 'g')
+    const regexSurroundingSeparators = new RegExp('^\\' + options.CustomDelimiter + '+|\\' + options.CustomDelimiter + '+$', 'g')
     const objExp = {}
     let keys = Object.keys(objFlat)
     for (let i = 0, kln = keys.length; i < kln; i++) {
@@ -70,11 +70,11 @@ class ObjectFx {
       let currKey = prefix + origKey
       if (options.ExplicitArrays) {
         currKey = currKey
-          .replace(c.REGEX.EXPLICIT_ARRAY_GM, options.KeySeparator + '[$1]' + options.KeySeparator)
-          .replace(regexConsecutiveSeparators, options.KeySeparator)
+          .replace(c.REGEX.EXPLICIT_ARRAY_GM, options.CustomDelimiter + '[$1]' + options.CustomDelimiter)
+          .replace(regexConsecutiveSeparators, options.CustomDelimiter)
           .replace(regexSurroundingSeparators, c.EMPTY_STRING)
       }
-      const chunks = currKey.split(options.KeySeparator)
+      const chunks = currKey.split(options.CustomDelimiter)
       let obj = objExp
       for (let j = 0, cln = chunks.length; j < cln; j++) {
         let currChunk = chunks[j]
@@ -140,7 +140,7 @@ class ObjectFx {
           } else {
             let prefix = prop
             if (prefix) {
-              prefix += options.KeySeparator
+              prefix += options.CustomDelimiter
             }
             recurse(cur[i], prefix + i, lev)
           }
@@ -151,7 +151,7 @@ class ObjectFx {
       } else {
         if (Object.prototype.toString.call(cur) === '[object Object]') { // cur && cur.toString() === '[object Object]'
           for (var p in cur) {
-            recurse(cur[p], prop ? prop + options.KeySeparator + p : p, lev)
+            recurse(cur[p], prop ? prop + options.CustomDelimiter + p : p, lev)
           }
         } else {
           result[prop] = cur
