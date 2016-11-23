@@ -53,9 +53,9 @@ console.log(expandedObject)
 
 API Methods
 ------------
-- [flatten(obj)](#flattenobjopt)
-- [expand(obj)](#expandobjopt)
-- [unflatten(obj)](#unflattenobjopt)
+- [flatten(obj)](#flattenobj-opt)
+- [expand(obj)](#expandobj-opt)
+- [unflatten(obj)](#unflattenobj-opt)
 
 
 ### flatten(obj, opt)
@@ -147,7 +147,7 @@ console.log(expandedObject)
 ### unflatten(obj, opt)
 
 Expands an object (alternative method name). 
-Uses [expand](#expandobjopt) under the hood.
+Uses [expand](#expandobj-opt) under the hood.
 
 
 License
