@@ -4,12 +4,6 @@ Object FX
 
 **F**latten and e**X**pand for Javascript Objects.
 
-Common Use Cases
-----------------
-- Directly utilize redis hashes: Store, manipulate and retrieve Javascript object data easily
-- Simplify updates of e.g. MongoDB documents: Don't lose unset properties by using dot notation
-- For convenience and "because of the clarity" (e.g. data conversion, debug output) 
-
 Installation
 ------------
 
@@ -51,33 +45,43 @@ console.log(expandedObject)
 */
 ```
 
+Common Use Cases
+----------------
+- Directly utilize redis hashes: Store, manipulate and retrieve Javascript object data easily
+- Simplify updates of e.g. MongoDB documents: Don't lose unset properties by using dot notation
+- For convenience and "because of the clarity" (e.g. data conversion, debug output) 
+
+
 API Methods
 ------------
-- [flatten(obj)](#flattenobj-opt)
-- [expand(obj)](#expandobj-opt)
-- [unflatten(obj)](#unflattenobj-opt)
+- [flatten(obj, opt)](#flattenobj-opt)
+- [expand(obj, opt)](#expandobj-opt)
+- [unflatten(obj, opt)](#unflattenobj-opt)
 
 
-### flatten(obj, opt)
+
+
+flatten(obj, opt)
+-----------------
 
 Flattens an object.
 
-#### Options
+### Options:
 
 **CustomDelimiter**  
-{String}, defaults to '.'  
+*{String}, defaults to '.'*  
 You can use any character (chain), but avoid those that are already used within keys.
 
 **ExplicitArrays**  
-{Boolean}, defaults to false  
+*{Boolean}, defaults to false*  
 If set to `true` arrays are flattened in bracket notation, e.g. arr[0] instead of arr.0
 
-**MaxDepth**
-{Number}, defaults to 0
+**MaxDepth**  
+*{Number}, defaults to 0*  
 Maximum number of nested levels to flatten.
 
 **CircularityCheck**  
-{Boolean}, defaults to false  
+*{Boolean}, defaults to false*  
 Perform a check for circular references before flattening the object.  
 Without prior testing circular objects will throw `RangeError: Maximum call stack size exceeded`.
 
@@ -114,22 +118,23 @@ console.log(flattenedObject)
 
 
 
-### expand(obj, opt)
+expand(obj, opt)
+----------------
 
 Expands an object.
 
-#### Options
+### Options:
 
 **CustomDelimiter**  
-{String}, defaults to '.'  
+*{String}, defaults to '.'*  
 You can use any character (chain), but avoid those that are already used within keys.
 
 **ExplicitArrays**  
-{Boolean}, defaults to false  
+*{Boolean}, defaults to false*  
 If set to `true` bracket notation, e.g. arr[0], is expanded into arrays, otherwise ignored.
 
 **AutocreateArrays**  
-{Boolean}, defaults to true  
+*{Boolean}, defaults to true*  
 Per default keys consisting of whole numbers will be expanded to array indices.  
 Set this option to `false` to create keys instead.
 
@@ -167,7 +172,7 @@ console.log(expandedObject)
 
 ### unflatten(obj, opt)
 
-Alternate method name: Expands an object. 
+Expands an object (alternate method name).  
 Uses [expand](#expandobj-opt) under the hood.
 
 
