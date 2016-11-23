@@ -7,7 +7,7 @@ Object FX
 Installation
 ------------
 
-    npm install object-fx
+    $ npm install object-fx
 
 
 Usage
