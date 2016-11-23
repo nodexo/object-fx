@@ -59,6 +59,7 @@ API Methods
 - [unflatten(obj, opt)](#unflattenobj-opt)
 
 
+<p>&nbsp;</p>
 
 
 flatten(obj, opt)
@@ -69,20 +70,20 @@ Flattens an object.
 ### Options:
 
 **CustomDelimiter**  
-*{String}, defaults to '.'*  
-You can use any character (chain), but avoid those that are already used within keys.
+*{String}, defaults to '.' (dot)*  
+You can use any char or character chain, but avoid those that are already used within keys.
 
 **ExplicitArrays**  
-*{Boolean}, defaults to false*  
-If set to `true` arrays are flattened in bracket notation, e.g. arr[0] instead of arr.0
+*{Boolean}, defaults to `false`*  
+If set to `true` arrays are flattened in bracket notation, e.g. to `arr[0]` instead of `arr.0`
 
 **MaxDepth**  
 *{Number}, defaults to 0*  
-Maximum number of nested levels to flatten.
+Maximum number of (nested) levels to flatten.
 
 **CircularityCheck**  
-*{Boolean}, defaults to false*  
-Perform a check for circular references before flattening the object.  
+*{Boolean}, defaults to `false`*  
+Perform a check for circular references before flattening an object.  
 Without prior testing circular objects will throw `RangeError: Maximum call stack size exceeded`.
 
 Example:
@@ -117,6 +118,8 @@ console.log(flattenedObject)
 ```
 
 
+<p>&nbsp;</p>
+
 
 expand(obj, opt)
 ----------------
@@ -126,17 +129,17 @@ Expands an object.
 ### Options:
 
 **CustomDelimiter**  
-*{String}, defaults to '.'*  
-You can use any character (chain), but avoid those that are already used within keys.
+*{String}, defaults to '.' (dot)*  
+You can use any char or character chain, but avoid those that are already used within keys.
 
 **ExplicitArrays**  
-*{Boolean}, defaults to false*  
-If set to `true` bracket notation, e.g. arr[0], is expanded into arrays, otherwise ignored.
+*{Boolean}, defaults to `false`*  
+If set to `true`, bracket notations like `arr[0]` will be expanded into arrays, otherwise ignored.
 
 **AutocreateArrays**  
-*{Boolean}, defaults to true*  
-Per default keys consisting of whole numbers will be expanded to array indices.  
-Set this option to `false` to create keys instead.
+*{Boolean}, defaults to `true`*  
+Per default, keys consisting of *whole numbers* are expanded to array indices, e.g. `{ a.0: 'value'}` ⇒ `{ a: [ 'value' ] }`  
+Set this option to `false` to create object keys instead: `{ a.0: 'value'}` ⇒ `{ a: { 0: 'value' }`
 
 Example:
 
@@ -170,10 +173,17 @@ console.log(expandedObject)
 
 ```
 
+
+<p>&nbsp;</p>
+
+
 ### unflatten(obj, opt)
 
 Expands an object (alternate method name).  
 Uses [expand](#expandobj-opt) under the hood.
+
+
+<p>&nbsp;</p>
 
 
 License
