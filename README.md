@@ -63,11 +63,23 @@ API Methods
 Flattens an object.
 
 #### Options
-- KeySeparator: String,  defaults to '.'
-- ExplicitArrays: Boolean, defaults to false
-- CircularityCheck: Boolean, defaults to false
-- MaxDepth: Number, defaults to 0
 
+**CustomDelimiter**  
+{String}, defaults to '.'  
+You can use any character (chain), but avoid those that are already used within keys.
+
+**ExplicitArrays**  
+{Boolean}, defaults to false  
+If set to `true` arrays are flattened in bracket notation, e.g. arr[0] instead of arr.0
+
+**MaxDepth**
+{Number}, defaults to 0
+Maximum number of nested levels to flatten.
+
+**CircularityCheck**  
+{Boolean}, defaults to false  
+Perform a check for circular references before flattening the object.  
+Without prior testing circular objects will throw `RangeError: Maximum call stack size exceeded`.
 
 Example:
 
@@ -107,10 +119,19 @@ console.log(flattenedObject)
 Expands an object.
 
 #### Options
-- KeySeparator: String,  defaults to '.'
-- AutocreateArrays: Boolean, defaults to true
-- ExplicitArrays: Boolean, defaults to false
 
+**CustomDelimiter**  
+{String}, defaults to '.'  
+You can use any character (chain), but avoid those that are already used within keys.
+
+**ExplicitArrays**  
+{Boolean}, defaults to false  
+If set to `true` bracket notation, e.g. arr[0], is expanded into arrays, otherwise ignored.
+
+**AutocreateArrays**  
+{Boolean}, defaults to true  
+Per default keys consisting of whole numbers will be expanded to array indices.  
+Set this option to `false` to create keys instead.
 
 Example:
 
@@ -146,7 +167,7 @@ console.log(expandedObject)
 
 ### unflatten(obj, opt)
 
-Expands an object (alternative method name). 
+Alternate method name: Expands an object. 
 Uses [expand](#expandobj-opt) under the hood.
 
 
