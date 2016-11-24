@@ -88,28 +88,34 @@ Example:
 ```js
 const objectFx = require('object-fx')
 
-let nestedObject = {
-    hello: {
-        world: [1, 2, 3, '!']
-    },
+const nestedObject = {
+  lets: {
+    count: [1, 2, 3, '...']
+  },
+  Is: {
     this: {
-        is: {
-            deeply: {
-                nested: 'OK'
-            }
+      deeply: {
+        nested: {
+          '?': 'YEES!!!'
         }
+      }
     }
+  }
 }
 
-let flattenedObject = objectFx.flatten(nestedObject, { ExplicitArrays: true, MaxDepth: 3 })
-console.log(flattenedObject)
+let flattened = objectFx.flatten(nestedObject, { ExplicitArrays: true, MaxDepth: 3 })
+console.log(flattened)
 /*
 {
-    'hello.world[0]': 1,
-    'hello.world[1]': 2,
-    'hello.world[2]': 3,
-    'hello.world[3]': '!',
-    'this.is.deeply': { nested: 'OK' }
+  'lets.count[0]': 1,
+  'lets.count[1]': 2,
+  'lets.count[2]': 3,
+  'lets.count[3]': '...',
+  'Is.this.deeply': {
+    nested: {
+      '?': 'YEES!!!'
+    }
+  }
 }
 */
 ```
@@ -140,27 +146,29 @@ Example:
 const objectFx = require('object-fx')
 
 let flatObject = {
-    'hello.world[0]': 1,
-    'hello.world[1]': 2,
-    'hello.world[2]': 3,
-    'hello.world[3]': '!',
-    'this.is.deeply': { nested: 'OK' }
+  'lets.count[0]': 1,
+  'lets.count[1]': 2,
+  'lets.count[2]': 3,
+  'lets.count[3]': '...',
+  'Is.this.deeply.nested.?': 'YEES!!!'
 }
 
-let expandedObject = objectFx.expand(flatObject, { ExplicitArrays: true })
-console.log(expandedObject)
+let expanded = objectFx.expand(flatObject, { ExplicitArrays: true })
+console.log(expanded)
 /*
 {
-    hello: {
-        world: [1, 2, 3, '!']
-    },
+  lets: {
+    count: [1, 2, 3, '...']
+  },
+  Is: {
     this: {
-        is: {
-            deeply: {
-                nested: 'OK'
-            }
+      deeply: {
+        nested: {
+          '?': 'YEES!!!'
         }
+      }
     }
+  }
 }
 */
 
