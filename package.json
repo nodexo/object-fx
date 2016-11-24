@@ -1,7 +1,7 @@
 {
   "name": "object-fx",
   "version": "1.0.0",
-  "description": "Flatten and expand objects.",
+  "description": "Flatten and eXpand for Javascript Objects.",
   "main": "index.js",
   "scripts": {
     "pretest": "npm install codeclimate-test-reporter -g",
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/nodexo/object-fx#readme",
   "dependencies": {
-    "depicts-whole-number": "^1.0.7"
+    "depicts-whole-number": "^1.0.8"
   },
   "devDependencies": {
     "standard": "^8.5.0",
