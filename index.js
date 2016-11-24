@@ -1,4 +1,5 @@
 
+'use strict'
 const depictsWholeNumber = require('depicts-whole-number').onlySafeNumbers
 const c = {
   ESCAPE_CHAR: '\\',
