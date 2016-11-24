@@ -61,8 +61,8 @@ class ObjectFx {
     }
     const options = Object.prototype.toString.call(userOptions) === '[object Object]' ? Object.assign({}, defaultOptions, userOptions) : defaultOptions
     const prefix = 'root' + options.CustomDelimiter
-    const regexConsecutiveSeparators = new RegExp('\\' + options.CustomDelimiter + '{2,}', 'g')
-    const regexSurroundingSeparators = new RegExp('^\\' + options.CustomDelimiter + '+|\\' + options.CustomDelimiter + '+$', 'g')
+    const regexConsecutiveSeparators = new RegExp('\\' + options.CustomDelimiter.split('').join('\\') + '{2,}', 'g')
+    const regexSurroundingSeparators = new RegExp('^\\' + options.CustomDelimiter.split('').join('\\') + '+|\\' + options.CustomDelimiter.split('').join('\\') + '+$', 'g')
     const objExp = {}
     let keys = Object.keys(objFlat)
     for (let i = 0, kln = keys.length; i < kln; i++) {
@@ -94,9 +94,9 @@ class ObjectFx {
             }
           }
         }
-        if (options.ExplicitArrays && this._containsValidArrayIndex(currChunk)) {
+        /* if (options.ExplicitArrays && this._containsValidArrayIndex(currChunk)) {
           currChunk.replace(c.REGEX.SQUARE_BRACKETS, c.EMPTY_STRING)
-        }
+        } */
         obj = obj[currChunk]
       }
     }
@@ -146,9 +146,9 @@ class ObjectFx {
             recurse(cur[i], prefix + i, lev)
           }
         }
-        if (l === 0) {
+        /* if (l === 0) {
           result[prop] = []
-        }
+        } */
       } else {
         if (Object.prototype.toString.call(cur) === '[object Object]') { // cur && cur.toString() === '[object Object]'
           for (var p in cur) {
