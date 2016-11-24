@@ -3,10 +3,10 @@ const tap = require('tap')
 const objectFx = require('../index.js')
 
 /**
-  == Primitive Data Types ==
-  NaN of two different object can't be compared,
-  because it could be anything except a number.
-  So the comparison has to be isNaN(NaN)!
+ * Primitive Data Types
+ * NaN of two different object can't be compared,
+ * because it could be anything except a number.
+ * So the comparison has to be isNaN(NaN)!
 */
 
 const primitiveDataTypes = {
@@ -40,7 +40,7 @@ for (let key of Object.keys(primitiveDataTypes)) {
 }
 
 /**
-  == Object Data Types ==
+ * Object Data Types
 */
 let myMap = new Map()
 myMap.set(1, 'one')
