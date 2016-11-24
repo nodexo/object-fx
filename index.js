@@ -48,6 +48,15 @@ class ObjectFx {
   }
 
   /**
+   * Merge user options with default options
+   * @param {Object} userOptions
+   * @return {Object}
+   */
+  static _mergeOptions (userOptions) {
+    return Object.prototype.toString.call(userOptions) === '[object Object]' ? Object.assign({}, defaultOptions, userOptions) : defaultOptions
+  }
+
+  /**
    * Expands (unflattens) a flattened object
    * @param {Object} objFlat - flattened object
    * @param {Object} userOptions - options
@@ -60,7 +69,7 @@ class ObjectFx {
     if (Object.prototype.toString.call(objFlat) !== '[object Object]') {
       return null
     }
-    const options = Object.prototype.toString.call(userOptions) === '[object Object]' ? Object.assign({}, defaultOptions, userOptions) : defaultOptions
+    const options = this._mergeOptions(userOptions)
     const prefix = 'root' + options.CustomDelimiter
     const regexConsecutiveSeparators = new RegExp('\\' + options.CustomDelimiter.split('').join('\\') + '{2,}', 'g')
     const regexSurroundingSeparators = new RegExp('^\\' + options.CustomDelimiter.split('').join('\\') + '+|\\' + options.CustomDelimiter.split('').join('\\') + '+$', 'g')
@@ -114,7 +123,7 @@ class ObjectFx {
     if (Object.prototype.toString.call(objExp) !== '[object Object]') {
       return null
     }
-    const options = Object.prototype.toString.call(userOptions) === '[object Object]' ? Object.assign({}, defaultOptions, userOptions) : defaultOptions
+    const options = this._mergeOptions(userOptions)
     if (options.CircularityCheck) {
       try {
         JSON.stringify(objExp)
@@ -136,7 +145,7 @@ class ObjectFx {
       if (typeof cur !== 'object') { // Object(cur) !== cur
         result[prop] = cur
       } else if (Array.isArray(cur)) { // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
-        for (var i = 0, l = cur.length; i < l; i++) {
+        for (let i = 0, l = cur.length; i < l; i++) {
           if (options.ExplicitArrays) {
             recurse(cur[i], prop + '[' + i + ']', lev)
           } else {
@@ -152,7 +161,7 @@ class ObjectFx {
         } */
       } else {
         if (Object.prototype.toString.call(cur) === '[object Object]') { // cur && cur.toString() === '[object Object]'
-          for (var p in cur) {
+          for (let p in cur) {
             recurse(cur[p], prop ? prop + options.CustomDelimiter + p : p, lev)
           }
         } else {
