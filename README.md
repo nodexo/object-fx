@@ -23,8 +23,8 @@ let nestedObject = {
     }
 }
 
-let flattenedObject = objectFx.flatten(nestedObject)
-console.log(flattenedObject)
+let flattened = objectFx.flatten(nestedObject)
+console.log(flattened)
 /*
 {
     'hello.world.0': 1,
@@ -34,8 +34,8 @@ console.log(flattenedObject)
 }
 */
 
-let expandedObject = objectFx.expand(flattenedObject)
-console.log(expandedObject)
+let expanded = objectFx.expand(flattened)
+console.log(expanded)
 /*
 {
     hello: {
