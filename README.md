@@ -49,7 +49,8 @@ Common Use Cases
 ----------------
 - Directly utilize redis hashes: Store, manipulate and retrieve Javascript object data easily
 - Simplify updates of e.g. MongoDB documents: Don't lose unset properties by using dot notation
-- For convenience and "because of the clarity" (e.g. data conversion, debug output) 
+- For convenience and "because of the clarity" (e.g. data conversion, debug output)
+- ...add your own here!
 
 
 API Methods
