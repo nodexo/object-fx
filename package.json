@@ -4,8 +4,9 @@
   "description": "Flatten and expand objects.",
   "main": "index.js",
   "scripts": {
+    "pretest": "npm install codeclimate-test-reporter -g",
     "test": "standard & tap test/*.js --coverage --reporter spec",
-    "posttest": "tap --coverage-report=lcov"
+    "posttest": "tap --coverage-report=lcov && codeclimate-test-reporter < ./coverage/lcov.info"
   },
   "repository": {
     "type": "git",
