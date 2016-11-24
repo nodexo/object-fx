@@ -4,6 +4,15 @@ Object FX
 
 **F**latten and e**X**pand for Javascript Objects.
 
+[![Build Status](https://travis-ci.org/nodexo/object-fx.svg?branch=master)](https://travis-ci.org/nodexo/object-fx)
+[![Test Coverage](https://codeclimate.com/github/nodexo/object-fx/badges/coverage.svg?v=1.0.0)](https://codeclimate.com/github/nodexo/object-fx)
+
+[![Dependency Status](https://david-dm.org/nodexo/object-fx.svg?v=1.0.0)](https://david-dm.org/nodexo/object-fx)
+[![devDependencies Status](https://david-dm.org/nodexo/object-fx/dev-status.svg?v=1.0.0)](https://david-dm.org/nodexo/object-fx?type=dev)
+
+[![Standard - JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
+
 Installation
 ------------
 
