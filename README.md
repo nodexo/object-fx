@@ -66,6 +66,11 @@ Flattens an object.
 
 ### Options:
 
+**CircularityCheck**  
+*{Boolean}, defaults to `false`*  
+Perform a check for circular references before flattening an object.  
+Without prior testing circular objects will throw `RangeError: Maximum call stack size exceeded`.
+
 **CustomDelimiter**  
 *{String}, defaults to '.' (dot)*  
 You can use any char or character chain, but avoid those that are already used within keys.
@@ -77,11 +82,6 @@ If set to `true` arrays are flattened in bracket notation, e.g. to `arr[0]` inst
 **MaxDepth**  
 *{Number}, defaults to 0*  
 Maximum number of (nested) levels to flatten.
-
-**CircularityCheck**  
-*{Boolean}, defaults to `false`*  
-Perform a check for circular references before flattening an object.  
-Without prior testing circular objects will throw `RangeError: Maximum call stack size exceeded`.
 
 Example:
 
@@ -121,6 +121,11 @@ Expands an object.
 
 ### Options:
 
+**AutocreateArrays**  
+*{Boolean}, defaults to `true`*  
+Per default, keys consisting of *whole numbers* are expanded to array indices, e.g. `{ a.0: 'value'}` ⇒ `{ a: [ 'value' ] }`  
+Set this option to `false` to create object keys instead: `{ a.0: 'value'}` ⇒ `{ a: { 0: 'value' }`
+
 **CustomDelimiter**  
 *{String}, defaults to '.' (dot)*  
 You can use any char or character chain, but avoid those that are already used within keys.
@@ -128,11 +133,6 @@ You can use any char or character chain, but avoid those that are already used w
 **ExplicitArrays**  
 *{Boolean}, defaults to `false`*  
 If set to `true`, bracket notations like `arr[0]` will be expanded into arrays, otherwise ignored.
-
-**AutocreateArrays**  
-*{Boolean}, defaults to `true`*  
-Per default, keys consisting of *whole numbers* are expanded to array indices, e.g. `{ a.0: 'value'}` ⇒ `{ a: [ 'value' ] }`  
-Set this option to `false` to create object keys instead: `{ a.0: 'value'}` ⇒ `{ a: { 0: 'value' }`
 
 Example:
 
