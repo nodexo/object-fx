@@ -14,10 +14,13 @@
     "url": "git+https://github.com/nodexo/object-fx.git"
   },
   "keywords": [
+    "nested",
     "object",
     "flatten",
+    "flat",
     "expand",
-    "unflatten"
+    "unflatten",
+    "json"
   ],
   "author": "Michael Kortstiege",
   "license": "ISC",
