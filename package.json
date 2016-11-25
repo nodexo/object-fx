@@ -6,7 +6,8 @@
   "scripts": {
     "pretest": "npm install codeclimate-test-reporter -g",
     "test": "standard & tap test/*.js --coverage --reporter spec",
-    "posttest": "tap --coverage-report=lcov && codeclimate-test-reporter < ./coverage/lcov.info"
+    "posttest": "tap --coverage-report=lcov && codeclimate-test-reporter < ./coverage/lcov.info",
+    "test-local": "standard & tap test/*.js --coverage --coverage-report=lcov --reporter spec"
   },
   "repository": {
     "type": "git",
