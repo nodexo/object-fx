@@ -120,7 +120,7 @@ class ObjectFx {
    * @return {Object}
    */
   static flatten (objExp, userOptions) {
-    if (Object.prototype.toString.call(objExp) !== '[object Object]') {
+    if (Object.prototype.toString.call(objExp) !== '[object Object]' && Object.prototype.toString.call(objExp) !== '[object Array]') {
       return null
     }
     const options = this._mergeOptions(userOptions)
