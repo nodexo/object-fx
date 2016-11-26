@@ -32,6 +32,11 @@ let flattened = null
 let expanded = null
 
 /**
+ * Option Check
+*/
+tap.throws(function () { objectFx.flatten(nestedObject, { OptionWithTypo: true }) }, {}, 'Throw error: unsupported option')
+
+/**
  * AutocreateArrays
 */
 flattened = objectFx.flatten(nestedObject)
