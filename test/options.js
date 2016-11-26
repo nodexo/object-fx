@@ -58,10 +58,10 @@ tap.strictSame(objectFx.expand(flattened, { AutocreateArrays: false }), {
 /**
  * CircularityCheck
 */
-// tap.fail(objectFx.flatten(circularReference), null, 'circular reference without testing')
+tap.throws(function () { objectFx.flatten(circularReference) }, {}, 'Throw error: circular reference without testing')
 tap.strictSame(objectFx.flatten(circularReference, { CircularityCheck: true }), null, 'CircularityCheck (circular reference)')
 
-// tap.fail(objectFx.flatten(circularArrays), null, 'circular arrays without testing')
+tap.throws(function () { objectFx.flatten(circularArrays) }, {}, 'Throw error: circular arrays without testing')
 tap.strictSame(objectFx.flatten(circularArrays, { CircularityCheck: true }), null, 'CircularityCheck (circular arrays)')
 
 /**
