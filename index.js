@@ -53,7 +53,15 @@ class ObjectFx {
    * @return {Object}
    */
   static _mergeOptions (userOptions) {
-    return Object.prototype.toString.call(userOptions) === '[object Object]' ? Object.assign({}, defaultOptions, userOptions) : defaultOptions
+    if (Object.prototype.toString.call(userOptions) === '[object Object]') {
+      for (let key of Object.keys(userOptions)) {
+        if (defaultOptions.hasOwnProperty(key) === false) {
+          throw new Error('Unsupported option: ' + key)
+        }
+      }
+      return Object.assign({}, defaultOptions, userOptions)
+    }
+    return defaultOptions
   }
 
   /**
